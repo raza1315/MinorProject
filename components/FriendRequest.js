@@ -16,7 +16,7 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
             })
         }
         catch (err) {
-            console.log("Error Accepting the friend request : ", err);
+            console.log("Error Accepting the friend's request : ", err);
         }
     }
     return (
