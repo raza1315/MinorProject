@@ -97,7 +97,6 @@ const ChatMessageScreen = () => {
                 response.data.forEach(msgData => {
                     const time = GetTimeOfMsg(msgData.timeStamp);
                     setMessages((prevMessages) => [...prevMessages, { message: msgData.message, sentTo: msgData.receiverId, time: time }])
-                    console.log(msgData.timeStamp);
                 });
             }
             else {
@@ -142,18 +141,18 @@ const ChatMessageScreen = () => {
 
     return (
         <KeyboardAvoidingView style={{ flex: 1, backgroundColor: "#F0F0F0" }}>
-            <ScrollView style={{ width: "100%", backgroundColor: "lightgray", flexDirection: "column", paddingTop: 7 }} ref={scrollViewRef} onContentSizeChange={scrollToBottom}>
+            <ScrollView style={{ width: "100%",backgroundColor: "#0e60d7", flexDirection: "column", paddingTop: 7 }} ref={scrollViewRef} onContentSizeChange={scrollToBottom}>
                 {messages.map((msg, index) => (
                     msg.sentTo == friendId ?
-                        <View key={index} style={{ alignSelf: "flex-end", justifyContent: "center", paddingHorizontal: 11, paddingVertical: 6, backgroundColor: "yellow", maxWidth: "77%", marginBottom: 10, marginRight: 5, borderBottomLeftRadius: 13, borderBottomRightRadius: 15, borderTopLeftRadius: 15 }}>
-                            <Text style={{ marginRight: "15%", fontSize: 16 }}>{msg.message}</Text>
-                            <Text style={{ color:"#98979a", fontSize: 12,textAlign:'right',marginTop:"-4.7%" }}>{msg.time}</Text>
+                        <View key={index} style={{ alignSelf: "flex-end", justifyContent: "center", paddingHorizontal: 11, paddingVertical: 6, backgroundColor: "white", maxWidth: "77%", marginBottom: 10, marginRight: 5, borderBottomLeftRadius: 13, borderBottomRightRadius: 15, borderTopLeftRadius: 15 }}>
+                            <Text style={{ color:"rgba(0,0,0,0.7)",letterSpacing:0.3,marginRight: "15%", fontSize: 17, }}>{msg.message}</Text>
+                            <Text style={{ color:"#8c8c8c", fontSize: 12,textAlign:'right',marginTop:"-4.7%" }}>{msg.time}</Text>
 
                         </View>
                         :
-                        <View key={index} style={{ alignSelf: "flex-start", justifyContent: "center", paddingHorizontal: 11, paddingVertical: 6, backgroundColor: "yellow", maxWidth: "77 %", marginBottom: 10, marginLeft: 5, borderBottomLeftRadius: 15, borderBottomRightRadius: 13, borderTopRightRadius: 15 }}>
-                            <Text style={{ marginRight: "15%", fontSize: 16 }}>{msg.message}</Text>
-                            <Text style={{ color:"#98979a", fontSize: 12,textAlign:'right',marginTop:"-4.7%" }}>{msg.time}</Text>
+                        <View key={index} style={{ alignSelf: "flex-start", justifyContent: "center", paddingHorizontal: 11, paddingVertical: 6, backgroundColor:"rgba(255,255,255,0.55)", maxWidth: "77 %", marginBottom: 10, marginLeft: 5, borderBottomLeftRadius: 15, borderBottomRightRadius: 13, borderTopRightRadius: 15 }}>
+                            <Text style={{ marginRight: "15%",color:"white",letterSpacing:0.3,fontSize: 17, }}>{msg.message}</Text>
+                            <Text style={{ color:"rgba(255,255,255,0.75)" ,fontSize: 12,textAlign:'right',marginTop:"-4.7%" }}>{msg.time}</Text>
 
                         </View>
 
@@ -164,7 +163,7 @@ const ChatMessageScreen = () => {
                 <TextInput value={messageInput} onChangeText={(text) => setMessageInput(text)} placeholder=" Happy Message.... :) " style={{ flex: 1, height: 40, borderWidth: 1, borderColor: "#dddddd", borderRadius: 22, paddingHorizontal: 10 }} />
                 <FontAwesome style={{ marginLeft: 8 }} name="camera" size={25} color="#AAA7AD" />
                 <TouchableOpacity onPress={sendMessage}>
-                    <Feather style={{ marginLeft: 10, borderRadius: 15, backgroundColor: "#dddddd", padding: 9, paddingLeft: 7.5, paddingBottom: 7 }} name="send" size={25} color="gray" />
+                    <Feather style={{ marginLeft: 10, borderRadius: 15, backgroundColor: "rgba(0,0,255,0.55)", padding: 9, paddingLeft: 7.5, paddingBottom: 7 }} name="send" size={25} color="white" />
                 </TouchableOpacity>
             </View>
             {showEmoji && (

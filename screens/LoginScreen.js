@@ -14,7 +14,7 @@ const LoginScreen = () => {
             try {
                 const token = await AsyncStorage.getItem("authToken");
                 if (token) {
-                    navigation.navigate("Home");
+                    navigation.navigate("Welcome");
                 }
             }
             catch (err) {
@@ -33,7 +33,7 @@ const LoginScreen = () => {
         axios.post(`http://${ipAddress}:8000/login`, user).then((res) => {
             const token = res.data.token;
             AsyncStorage.setItem("authToken", token);
-            navigation.navigate("Home");
+            navigation.navigate("Welcome");
 
         }).catch((err) => {
             Alert.alert("Login Failed", "Please Enter Correct Password or Email");

@@ -33,7 +33,7 @@ const HomeScreen = () => {
     navigation.setOptions({
       headerTitle: "",
       headerLeft: () => {
-        return (<Text style={{ fontWeight: "bold", fontSize: 16 }}>Chat App Name</Text>);
+        return (<Text style={{ fontWeight: "bold", fontSize: 16 }}>Whisper Wave</Text>);
       },
       headerRight: () => {
         return (
