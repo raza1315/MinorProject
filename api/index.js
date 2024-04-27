@@ -42,21 +42,21 @@ io.on('connection', (socket) => {
     console.log(`User : ${socket.id} Connected `);
 
     socket.on('sendmessage', (data) => {
-        console.log('Message : ', data.message,"send by : ",data.senderId,"To : ",data.friendId);
-        const payload={
-            message:data.message,
-            sender:data.senderId,
-            receiver:data.friendId,
-            timeStamp:new Date(),
+        console.log('Message : ', data.message, "send by : ", data.senderId, "To : ", data.friendId);
+        const payload = {
+            message: data.message,
+            sender: data.senderId,
+            receiver: data.friendId,
+            timeStamp: new Date(),
         }
-        const newMessage= new Message({
-            senderId:payload.sender,
-            receiverId:payload.receiver,
-            message:payload.message,
-            timeStamp:new Date(),
+        const newMessage = new Message({
+            senderId: payload.sender,
+            receiverId: payload.receiver,
+            message: payload.message,
+            timeStamp: new Date(),
         })
-         newMessage.save();
-        socket .broadcast.emit('message', payload);
+        newMessage.save();
+        socket.broadcast.emit('message', payload);
     });
 
 
@@ -76,23 +76,23 @@ const storage = multer.diskStorage({
     },
     filename: function (req, file, cb) {
         const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
-        cb(null, uniqueSuffix + "-" +file.originalname);
+        cb(null, uniqueSuffix + "-" + file.originalname);
     }
 })
-const upload =multer({storage:storage});
+const upload = multer({ storage: storage });
 
 
 //end points for http requests 
-app.post("/register", upload.single('image'),async(req, res) => {
+app.post("/register", upload.single('image'), async (req, res) => {
     const { name, email, password } = req.body;
     const image = req.file.path;
     console.log(name, email, password, image);
-    const newUser = new User({ name, email, password, image});
+    const newUser = new User({ name, email, password, image });
 
- 
+
     newUser.save().then(() => {
         res.status(200).json({ message: "user registered successfully" })
-    }).catch((err) => {  
+    }).catch((err) => {
         console.log("Error resgistering the user", err);
         res.status(500).json({ message: "Error registering the user" });
     })
@@ -246,21 +246,21 @@ app.get("/friend/:friendId", async (req, res) => {
     }
 })
 
-app.get("/messages/:userId/:friendId", async(req,res)=>{
-    try{
-        const {userId,friendId}=req.params;
-        const messages=await Message.find({
-            $or:[
-                {senderId:userId,receiverId:friendId},
-                {senderId:friendId,receiverId:userId}
+app.get("/messages/:userId/:friendId", async (req, res) => {
+    try {
+        const { userId, friendId } = req.params;
+        const messages = await Message.find({
+            $or: [
+                { senderId: userId, receiverId: friendId },
+                { senderId: friendId, receiverId: userId }
             ]
-        }).populate("senderId","_id name");
+        }).populate("senderId", "_id name");
         res.status(200).json(messages);
 
     }
-    catch(err){
-        console.log("Error fetching the messages : ",err);
-        res.status(500).json({message:"internal error occurred"});
+    catch (err) {
+        console.log("Error fetching the messages : ", err);
+        res.status(500).json({ message: "internal error occurred" });
     }
 })
-  
+
