@@ -69,12 +69,17 @@ const User = ({ item }) => {
       flexDirection: "row",
       marginVertical: 10,
       alignItems: "center",
+      backgroundColor:"rgba(255,255,255,0.25)",
+      borderRadius:17,
+      paddingVertical:8,
+      paddingHorizontal:8,
     }}>
       <View>
         <Image style={{
           width: 50,
           height: 50,
           borderRadius: 25,
+          backgroundColor:"red",
           resizeMode: "cover",
         }} source={{ uri:`${item.image}`  }} />
       </View>
@@ -83,8 +88,8 @@ const User = ({ item }) => {
         flex: 1,
 
       }}>
-        <Text style={{ fontWeight: "bold" }}>{item.name}</Text>
-        <Text style={{ color: "gray", marginTop: 4 }}>{item.email}</Text>
+        <Text style={{ fontWeight: 600,color:"white" ,fontSize:15.5}}>{item.name}</Text>
+        <Text style={{ color: "rgba(255,255,255,0.6)", fontStyle:"italic",marginTop: 4,marginRight:4 }}>{item.email}</Text>
       </View>
       {userFriends.includes(item._id) ? (<>
         <Pressable

@@ -14,16 +14,15 @@ const WelcomeScreen = () => {
         }
         },[isFocused]);
   return (
-    <View style={{flex:1,flexDirection:"column",justifyContent:"center",alignItems:"center",marginTop:"-30%",backgroundColor:"#eee"}}>
-        <Text style={{fontSize:40,color:"gray",textAlign:"center"}}>Welcome To Whisper-Wave</Text>
+    <View style={{flex:1,flexDirection:"column",justifyContent:"center",alignItems:"center",marginTop:"-30%",backgroundColor:"rgba(0,0,0,0.94)"}}>
+        <Text style={{fontSize:40,color:"white",textAlign:"center"}}>Welcome To Whisper-Wave</Text>
         <LottieView
         autoPlay
-
         style={{
           width: 400,
           height: 400,
-          backgroundColor: '#eee',
           borderRadius:30,
+
         }}
         source={require('../assets/chatLoad.json')}
       />
@@ -43,5 +42,3 @@ const WelcomeScreen = () => {
 }
 
 export default WelcomeScreen
-
-const styles = StyleSheet.create({})
