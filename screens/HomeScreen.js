@@ -34,7 +34,7 @@ const HomeScreen = () => {
     navigation.setOptions({
       headerTitle: "",
       headerLeft: () => {
-        return (<Text style={{ color: "white", fontWeight: 500, fontSize: 19 }}>Whisper Wave</Text>);
+        return (<Text style={{ color: "white", fontWeight: 500, fontSize: 19 }}>-Konnect-</Text>);
       },
       headerRight: () => {
         return (
