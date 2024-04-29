@@ -3,11 +3,12 @@ import React, { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import { userType } from "../UserContext"
 import UserChat from '../components/UserChat'
-import { useNavigation } from '@react-navigation/native'
+import { useNavigation ,useIsFocused} from '@react-navigation/native'
 const ChatScreen = () => {
     const [friends, setFriends] = useState([]);
     const { userId, ipAddress } = useContext(userType);
     const navigation = useNavigation();
+    const isFocused=useIsFocused();
     useEffect(() => {
         navigation.setOptions({
             headerStyle: {
@@ -22,9 +23,11 @@ const ChatScreen = () => {
                 setFriends(res.data);
             })
         }
-        fetchFriends(userId);
-    }, [])
-    console.log(friends);
+        if(isFocused){
+            fetchFriends(userId);
+            console.log("focussing");
+        }
+    }, [isFocused])
     return (
         <View style={{ flex: 1, backgroundColor: "rgba(106,54,166,0.9)", borderTopColor: "white", borderTopWidth: 0.49 }}>
             <ImageBackground style={{flex:1,resizeMode:"cover",}} source={require("../assets/chatScreen.jpg")}>

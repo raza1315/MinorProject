@@ -28,12 +28,33 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
                 marginVertical: 10
             }}
         >
-            <Image style={{
-                width: 50,
-                height: 50,
-                borderRadius: 25,
-                resizeMode: "cover",
-            }} source={{ uri: `${item.image}` }} />
+             {item.image == "avatarId1" ? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar1.jpg")} /> : item.image=="avatarId2"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar2.jpg")} />:item.image=="avatarId3"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar3.jpg")} />:item.image=="avatarId4"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar4.jpg")} />:<Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/defaultAvatar.jpg")} />}
+
             <Text
                 style={{ color:"white",fontSize: 16, fontWeight: "500", marginLeft: 10, marginRight: 10, flex: 1 }}
             >{item.name} sent you a Friend Request </Text>

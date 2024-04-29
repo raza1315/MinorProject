@@ -4,10 +4,10 @@ import { userType } from '../UserContext';
 import axios from "axios"
 import { useIsFocused } from '@react-navigation/native';
 const User = ({ item }) => {
-  const { userId, setUserId,ipAddress } = useContext(userType);
-  const [refresh, setRefresh] = useState(1);
+  const { userId, setUserId, ipAddress } = useContext(userType);
   const [friendRequest, setFriendRequest] = useState([]);
   const [sentReq, setSentReq] = useState(false);
+  const [image, setImage] = useState('');
   const [userFriends, setUserFriends] = useState([]);
   const isFocused = useIsFocused();
 
@@ -17,6 +17,7 @@ const User = ({ item }) => {
         const response = await axios.get(`http://${ipAddress}:8000/friend-requests/sent/${userId}`);
         if (response.status == 200) {
           setFriendRequest(response.data);
+
         }
         else {
           console.log("error", response.status);
@@ -26,7 +27,6 @@ const User = ({ item }) => {
       }
     }
     if (isFocused) {
-
       fetchFriendRequest();
     }
   }, [isFocused])
@@ -69,27 +69,47 @@ const User = ({ item }) => {
       flexDirection: "row",
       marginVertical: 10,
       alignItems: "center",
-      backgroundColor:"rgba(255,255,255,0.25)",
-      borderRadius:17,
-      paddingVertical:8,
-      paddingHorizontal:8,
+      backgroundColor: "rgba(255,255,255,0.25)",
+      borderRadius: 17,
+      paddingVertical: 8,
+      paddingHorizontal: 8,
     }}>
       <View>
-        <Image style={{
+        {item.image == "avatarId1" ? <Image style={{
           width: 50,
           height: 50,
           borderRadius: 25,
-          backgroundColor:"red",
           resizeMode: "cover",
-        }} source={{ uri:`${item.image}`  }} />
+        }} source={require("../assets/avatar1.jpg")} /> : item.image=="avatarId2"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar2.jpg")} />:item.image=="avatarId3"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar3.jpg")} />:item.image=="avatarId4"? <Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar4.jpg")} />:<Image style={{
+          width: 50,
+          height: 50,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/defaultAvatar.jpg")} />}
+
       </View>
       <View style={{
         marginLeft: 12,
         flex: 1,
 
       }}>
-        <Text style={{ fontWeight: 600,color:"white" ,fontSize:15.5}}>{item.name}</Text>
-        <Text style={{ color: "rgba(255,255,255,0.6)", fontStyle:"italic",marginTop: 4,marginRight:4 }}>{item.email}</Text>
+        <Text style={{ fontWeight: 600, color: "white", fontSize: 15.5 }}>{item.name}</Text>
+        <Text style={{ color: "rgba(255,255,255,0.6)", fontStyle: "italic", marginTop: 4, marginRight: 4 }}>{item.email}</Text>
       </View>
       {userFriends.includes(item._id) ? (<>
         <Pressable

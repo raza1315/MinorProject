@@ -1,4 +1,4 @@
-import { View, Text, KeyboardAvoidingView, ScrollView, TextInput, Pressable, TouchableOpacity, Image, Keyboard, ImageBackground } from 'react-native'
+import { View, Text, KeyboardAvoidingView, ScrollView, TextInput, Pressable, TouchableOpacity, Image, Keyboard, ImageBackground, Vibration } from 'react-native'
 import { Entypo, FontAwesome, Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import EmojiSelector from 'react-native-emoji-selector';
 import axios from "axios"
@@ -35,9 +35,34 @@ const ChatMessageScreen = () => {
             headerTitle: "",
             headerLeft: () => {
                 return (<View style={{ flexDirection: "row", alignItems: "center", gap: 10, }}>
-                    <Ionicons onPress={() => navigation.goBack()} name="arrow-back" size={25} color="white" />
+                    <Ionicons onPress={() => navigation.navigate("Chats")} name="arrow-back" size={25} color="white" />
                     <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
-                        <Image style={{ resizeMode: "cover", width: 35, height: 35, borderRadius: 30 }} source={{ uri: `${friendData.image}` }} />
+                    {friendData.image == "avatarId1" ? <Image style={{
+          width : 45,
+          height : 45,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar1.jpg")} /> : friendData.image=="avatarId2"? <Image style={{
+          width : 45,
+          height : 45,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar2.jpg")} />:friendData.image=="avatarId3"? <Image style={{
+          width : 45,
+          height : 45,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar3.jpg")} />:friendData.image=="avatarId4"? <Image style={{
+          width : 45,
+          height : 45,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/avatar4.jpg")} />:<Image style={{
+          width : 45,
+          height : 45,
+          borderRadius: 25,
+          resizeMode: "cover",
+        }} source={require("../assets/defaultAvatar.jpg")} />}
                         <Text style={{ color: "white", fontWeight: 500, fontSize: 20 }}>{friendData.name}</Text>
                     </View>
                 </View>)
@@ -125,6 +150,7 @@ const ChatMessageScreen = () => {
             setMessages((prevMessages) => [...prevMessages, { message: messageInput, sentTo: friendId, time: formattedTime }])
             socket.emit('sendmessage', payload);
             setMessageInput('');
+            Vibration.vibrate(50);
         }
     }
 

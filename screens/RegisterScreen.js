@@ -1,9 +1,9 @@
-import { KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View, Alert } from 'react-native'
+import { KeyboardAvoidingView, Pressable, Image, Text, TextInput, View, Alert, Vibration, Touchable, TouchableOpacity } from 'react-native'
 import React, { useContext } from 'react'
 import { useState } from 'react';
 import { useNavigation } from "@react-navigation/native"
 import axios from "axios"
-import {userType} from "../UserContext"
+import { userType } from "../UserContext"
 import { Feather } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 const RegisterScreen = () => {
@@ -11,109 +11,37 @@ const RegisterScreen = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [image, setImage] = useState("");
-    const {ipAddress}=useContext(userType);
+    const [showAvatar, setShowAvatar] = useState(false);
+    const [selectAvatar, setSelectAvatar] = useState('');
+    const { ipAddress } = useContext(userType);
     const navigation = useNavigation();
 
-    const handleImageSelection = async () => {
-        try {
-            let permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
-            if (permissionResult.granted === false) {
-                alert("Permission to access camera roll is required!");
-                return;
-            }
 
-            let pickerResult = await ImagePicker.launchImageLibraryAsync({
-                allowsEditing: true,
-                aspect: [4, 3],
-                quality: 1,
-            });
-
-            if (!pickerResult.cancelled) {
-                setImage(pickerResult.assets[0].uri);
-                console.log("hello: ", pickerResult.assets[0].uri);
-                console.log(image);
-            }
-        } catch (error) {
-            console.log("Error selecting image: ", error);
+    const handleRegister = () => {
+        const user = {
+            name: name,
+            email: email,
+            password: password,
+            image: selectAvatar,
         }
-    };
-
-
-
-    const handleRegister = async () => {
-        try {
-            if (!image) {
-                Alert.alert(
-                    "Registration Failed",
-                    "Please select an image"
-                );
-                return;
-            }
-
-            // Create form data
-            const formData = new FormData();
-            formData.append("name", name);
-            formData.append("email", email);
-            formData.append("password", password);
-            formData.append("image", {
-                uri: image,
-                type: 'image/jpeg', 
-                name: 'image.jpg',
-            });
-
-            const response = await axios.post(`http://${ipAddress}:8000/register`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-
-
-            console.log(response);
+        axios.post(`http://${ipAddress}:8000/register`, user).then((response) => {
             Alert.alert(
                 "Registration Successfull",
                 "You have been registered successfully !"
-            );
+            )
             setName("");
             setEmail("");
             setPassword("");
             setImage("");
-        } catch (err) {
-            console.log("Registration failed:", err);
+        }).catch((err) => {
             Alert.alert(
-                "Registration Failed",
+                "Registeration Failed",
                 "Error occurred while registering"
-            );
-        }
-    };
-
-
-
-
-    // const handleRegister = () => {
-    //     const user = {
-    //         name: name,
-    //         email: email,
-    //         password: password,
-    //         image: image,
-    //     }
-    //     axios.post("http://${ipAddress}:8000/register", user).then((response) => {
-    //         Alert.alert(
-    //             "Registration Successfull",
-    //             "You have been registered successfully !"
-    //         )
-    //         setName("");
-    //         setEmail("");
-    //         setPassword("");
-    //         setImage("");
-    //     }).catch((err) => {
-    //         Alert.alert(
-    //             "Registeration Failed",
-    //             "Error occurred while registering"
-    //         )
-    //         console.log("registration failed", err);
-    //     })
-    // }
+            )
+            console.log("registration failed", err);
+        })
+    }
     return (
         <View style={{ flex: 1, backgroundColor: "white", padding: 10, alignItems: "center" }}>
             <KeyboardAvoidingView>
@@ -147,13 +75,30 @@ const RegisterScreen = () => {
                     <View style={{ marginTop: 10 }}>
                         <Text style={{ fontSize: 18, fontWeight: "600", color: "gray" }}>Image</Text>
                         <View style={{ flexDirection: "row", alignItems: "center", justifyContent: "space-between" }}>
-                            <Text style={{ fontSize: 18, marginVertical: 10 }}>Select Image From Gallery </Text>
-                            <Feather onPress={handleImageSelection} name="image" size={35} color="#9A9498" />
+                            <Text style={{ fontSize: 18, marginVertical: 10 }}>Choose an Avatar </Text>
+                            <Feather onPress={() => setShowAvatar(!showAvatar)} name="image" size={35} color="#9A9498" />
                         </View>
                     </View>
+                    {showAvatar ?
+                        <View style={{ width: "100%", height: "12%", flexDirection: "row",gap:20, backgroundColor: "lightgray", borderRadius: 15, paddingHorizontal: 20, paddingVertical: 7 }}>
+                            <TouchableOpacity onPress={()=>{setSelectAvatar("avatarId1");Vibration.vibrate(60)}}>
+                                <Image source={require("../assets/avatar1.jpg")} style={{resizeMode:"cover",height:50,width:50,borderRadius:50}}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{setSelectAvatar("avatarId2");Vibration.vibrate(60)}}>
+                                <Image source={require("../assets/avatar2.jpg")} style={{resizeMode:"cover",height:50,width:50,borderRadius:50}}/>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={()=>{setSelectAvatar("avatarId3");Vibration.vibrate(60)}}>
+                                <Image source={require("../assets/avatar3.jpg")} style={{resizeMode:"cover",height:50,width:50,borderRadius:50}}/>
+                            </TouchableOpacity>
+                        <TouchableOpacity onPress={()=>{setSelectAvatar("avatarId4");Vibration.vibrate(60)}}>
+                                <Image source={require("../assets/avatar4.jpg")} style={{resizeMode:"cover",height:50,width:50,borderRadius:50}}/>
+                            </TouchableOpacity>
+                        </View>
+                        :
+                        <></>}
                     <Pressable
                         onPress={handleRegister}
-                        style={{ width: 200, backgroundColor: "#4A55A2", padding: 15, marginTop: 50, marginLeft: "auto", marginRight: "auto", borderRadius: 7 }}>
+                        style={{ width: 200, backgroundColor: "#4A55A2", padding: 15, marginTop: 45, marginLeft: "auto", marginRight: "auto", borderRadius: 7 }}>
                         <Text style={{ color: "white", fontSize: 16, fontWeight: "bold", textAlign: "center" }}>Register</Text>
                     </Pressable>
                     <Pressable
