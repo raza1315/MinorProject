@@ -25,7 +25,7 @@ const RegisterScreen = () => {
             password: password,
             image: selectAvatar,
         }
-        axios.post(`http://${ipAddress}:8000/register`, user).then((response) => {
+        axios.post(`${ipAddress}/register`, user).then((response) => {
             Alert.alert(
                 "Registration Successfull",
                 "You have been registered successfully !"

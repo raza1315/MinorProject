@@ -19,7 +19,7 @@ const ChatScreen = () => {
     }, []);
     useEffect(() => {
         const fetchFriends = async (userId) => {
-            await axios.get(`http://${ipAddress}:8000/chats/${userId}`).then(res => {
+            await axios.get(`${ipAddress}/chats/${userId}`).then(res => {
                 setFriends(res.data);
             })
         }

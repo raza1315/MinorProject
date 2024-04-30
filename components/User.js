@@ -14,7 +14,7 @@ const User = ({ item }) => {
   useEffect(() => {
     const fetchFriendRequest = async () => {
       try {
-        const response = await axios.get(`http://${ipAddress}:8000/friend-requests/sent/${userId}`);
+        const response = await axios.get(`${ipAddress}/friend-requests/sent/${userId}`);
         if (response.status == 200) {
           setFriendRequest(response.data);
 
@@ -34,7 +34,7 @@ const User = ({ item }) => {
   useEffect(() => {
     const fetchUserFriends = async () => {
       try {
-        const response = await axios.get(`http://${ipAddress}:8000/friends/${userId}`);
+        const response = await axios.get(`${ipAddress}/friends/${userId}`);
         if (response.status == 200) {
           setUserFriends(response.data);
         }
@@ -56,7 +56,7 @@ const User = ({ item }) => {
       currentUserId: currentUserId,
       selectedUserId: selectedUserId
     }
-    axios.post(`http://${ipAddress}:8000/friend-request`, payload).then((res => {
+    axios.post(`${ipAddress}/friend-request`, payload).then((res => {
       console.log("sent request successfully !");
       setSentReq(true);
     })).catch((err) => {

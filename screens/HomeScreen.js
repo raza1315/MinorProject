@@ -22,7 +22,7 @@ const HomeScreen = () => {
     const userId = decodedToken.userId;
     setUserId(userId);
 
-    axios.get(`http://${ipAddress}:8000/users/${userId}`).then((res) => {
+    axios.get(`${ipAddress}/users/${userId}`).then((res) => {
       setUsers(res.data);
     }).catch((err) => {
       console.log("error retrieving the users ", err);

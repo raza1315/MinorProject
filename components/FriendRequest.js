@@ -11,7 +11,7 @@ const FriendRequest = ({ item, friendRequests, setFriendRequests }) => {
                 senderId: friendRequestId,
                 receiverId: userId
             }
-            await axios.post(`http://${ipAddress}:8000/friend-request/accept`, payload).then((res) => {
+            await axios.post(`${ipAddress}/friend-request/accept`, payload).then((res) => {
                 setFriendRequests(friendRequests.filter((friend) => friend._id != friendRequestId));
             })
         }

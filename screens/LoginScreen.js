@@ -30,7 +30,7 @@ const LoginScreen = () => {
             email: email,
             password: password
         }
-        axios.post(`http://${ipAddress}:8000/login`, user).then((res) => {
+        axios.post(`${ipAddress}/login`, user).then((res) => {
             const token = res.data.token;
             AsyncStorage.setItem("authToken", token);
             navigation.navigate("Welcome");

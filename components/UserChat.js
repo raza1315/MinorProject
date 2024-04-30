@@ -16,7 +16,7 @@ const UserChat = ({ friend }) => {
         return hours + ":" + minutes;
     }
     const fetcgLastMsg = async () => {
-        const res = await axios.get(`http://${ipAddress}:8000/messages/${userId}/${friend._id}`);
+        const res = await axios.get(`${ipAddress}/messages/${userId}/${friend._id}`);
         const n = res.data.length;
         if (n != 0) {
             setLastMsg(res.data[n - 1]);

@@ -81,7 +81,7 @@ const ChatMessageScreen = () => {
         console.log("current chat friend: ", friendId, " current user : ", userId);
         const fetchFriendData = async () => {
             try {
-                const response = await axios.get(`http://${ipAddress}:8000/friend/${friendId}`);
+                const response = await axios.get(`${ipAddress}/friend/${friendId}`);
                 setFriendData(response.data);
             }
             catch (err) {
@@ -93,7 +93,7 @@ const ChatMessageScreen = () => {
         scrollToBottom();
 
         //socket connection 
-        const newSocket = io(`http://${ipAddress}:8000`);
+        const newSocket = io(`${ipAddress}`);
         setSocket(newSocket);
 
         //keyboard pop ka function 
@@ -121,7 +121,7 @@ const ChatMessageScreen = () => {
 
     const fetchMessages = async () => {
         try {
-            const response = await axios.get(`http://${ipAddress}:8000/messages/${userId}/${friendId}`);
+            const response = await axios.get(`${ipAddress}/messages/${userId}/${friendId}`);
             if (response.status == 200) {
                 response.data.forEach(msgData => {
                     const time = GetTimeOfMsg(msgData.timeStamp);
