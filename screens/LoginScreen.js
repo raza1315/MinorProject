@@ -42,7 +42,7 @@ const LoginScreen = () => {
 
     }
     return (
-        <View style={{ flex: 1, backgroundColor: "white", padding: 10, alignItems: "center" }}>
+        <View style={{ flex: 1, backgroundColor: "rgba(252,252,255,1)", padding: 10, alignItems: "center" }}>
             <KeyboardAvoidingView>
                 <View style={{ marginTop: 100, justifyContent: "center", alignItems: "center" }}>
                     <Text style={{ color: "#4A55A2", fontSize: 18, fontWeight: "600" }}>Sign In</Text>
