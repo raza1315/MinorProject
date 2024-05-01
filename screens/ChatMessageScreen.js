@@ -93,7 +93,7 @@ const ChatMessageScreen = () => {
         scrollToBottom();
 
         //socket connection 
-        const newSocket = io(`${ipAddress}`);
+        const newSocket = io("http://192.168.0.143:8000");
         setSocket(newSocket);
 
         //keyboard pop ka function 
